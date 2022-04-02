@@ -1,0 +1,43 @@
+h1{
+    text-align: center;
+    color: crimson;
+}
+#container{
+    position: relative;
+    left:500px;
+    width:500px;
+    height: 400px;
+    background-color: crimson;
+}
+#username{
+    position: relative;
+    top:150px;
+    
+    right: 150px;
+   
+}
+#label{
+    position: relative;
+    top:80px;
+    left:100px;
+    font-size: 30px;
+    color:yellow;
+}
+#button{
+    border: 10px solid purple;
+    background-color: pink;
+    color: crimson;
+    position: relative;
+    top:200px;
+    right: 150px;
+}
+#dropdown{
+    position: relative;
+    top:130px;
+    left:250px;
+}
+#roomLabel{
+    position: relative;
+    top:140px;
+    right:80px;
+}

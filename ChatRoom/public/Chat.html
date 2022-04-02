@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>App Developers</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.2/qs.min.js"></script>
+    </head>
+<body>
+    <h1 class="header">Welcome to the  Programmer's Chat Room</h1>
+    <aside id="userList"></aside>
+
+    <section id="container">
+        
+    </section>
+        <label for="message">Send</label>
+        <input type="text" id='message' >
+        <button onclick="UserMessage()" id='button'>Send</button>
+        <button onclick="leave()" id="leaveButton">Leave Room</button>
+
+<style>
+
+    h1{
+        text-align: center;
+    }
+#container{
+    width:600px;
+    height:500px;
+    border:10px solid black;
+overflow:scroll;
+position: relative;
+left:400px;
+display: inline-block;
+}
+#message{
+   position: relative;
+   top:100px;
+    left:500px;
+    right:100px;
+    bottom: 450px;
+   
+}
+label{
+
+    position: relative;
+    left:550px;
+    top:60px;
+}
+#button{
+    position: relative;
+    top:100px;
+    left:300px;
+    
+}
+#userList{
+    border: 10px solid black;
+    width:100px;
+    height:300px;
+    display: inline-block;
+    overflow: scroll;
+}
+#leaveButton{
+    position: relative;
+    top:60px;
+}
+</style>
+
+
+<script>
+
+let socket=io();
+
+
+
+const{username,dropdown}= Qs.parse(location.search,{
+    ignoreQueryPrefix:true
+}) ;
+
+let head= document.querySelector('.header').innerHTML=`Welcome to the ${dropdown} ChatRoom`;
+
+
+socket.emit('joinUser',{username,dropdown});
+
+//listening for a click on the body
+let pUser;
+
+document.body.addEventListener('click',function(origin){
+    let target= origin.target;
+    if(target.tagName==='SPAN'){
+       pUser= target.innerHTML;
+    
+        socket.emit('privateMessage',pUser);
+    }
+
+});
+    //private message
+    socket.on('ask',function(){
+        alert('working private message');
+    });
+
+
+
+//leaving a room
+function leave(){
+    socket.emit('leave',socket.id);
+}
+
+socket.on('remove',function(User){
+    let node = document.createElement('span');
+let text= document.createTextNode(`${User} has left the chat`);
+node.appendChild(text);
+node.style.position='relative';
+node.style.left='150px';
+node.style.border="5px solid purple";
+node.style.padding="5px";
+node.style.margin="15px";
+
+let box= document.querySelector('#container');
+let br= document.createElement('br');
+let br2= document.createElement('br');
+box.appendChild(br);
+box.appendChild(br2);
+box.appendChild(node);
+
+})
+
+//redirect leaving user
+socket.on('redirect',function(User){
+    window.location='index.html';
+});
+    
+//remove from online users list 
+socket.on('removeFromList',function(username){
+let list = document.querySelector(`#${username}`);
+
+list.remove();   
+});
+
+
+
+
+
+socket.on('getUsers',function(members){
+
+    for(let i in members){
+
+        let span= document.createElement('span');
+        let name= document.createTextNode(members[i].username);
+        let br= document.createElement('br');   
+        let list= document.querySelector('#userList');
+        span.id=members[i].username;
+        span.appendChild(name);
+        list.appendChild(br);
+        list.appendChild(span);
+
+    }
+})
+
+
+
+socket.on('introduce',function(User){
+let node = document.createElement('span');
+let text= document.createTextNode(`${User.username} has joined the chat`);
+node.appendChild(text);
+node.style.position='relative';
+node.style.left='150px';
+node.style.border="5px solid green";
+node.style.padding="5px";
+node.style.margin="15px";
+
+let box= document.querySelector('#container');
+let br= document.createElement('br');
+let br2= document.createElement('br');
+box.appendChild(br);
+box.appendChild(br2);
+box.appendChild(node);
+
+
+});
+
+
+
+socket.on('delete',function(User){
+    let node = document.createElement('span');
+let text= document.createTextNode(`${User.username} has left the chat`);
+node.appendChild(text);
+node.style.position='relative';
+node.style.left='150px';
+node.style.border="5px solid purple";
+node.style.padding="5px";
+node.style.margin="15px";
+
+let box= document.querySelector('#container');
+let br= document.createElement('br');
+let br2= document.createElement('br');
+box.appendChild(br);
+box.appendChild(br2);
+box.appendChild(node);
+});
+
+
+
+
+
+function UserMessage(){
+let message= document.querySelector('#message').value;
+let node= document.createElement('span');
+let text= document.createTextNode(message);
+node.appendChild(text);
+node.style.border='5px solid blue';
+node.style.padding='5px';
+
+let box= document.querySelector('#container');
+
+let br= document.createElement('br');
+
+box.appendChild(br);
+box.appendChild(node);
+socket.emit('sent',{id:socket.id,message:message});
+}
+
+
+socket.on('notify',function(User){
+  
+let node= document.createElement('span');
+let text= document.createTextNode(`${User.username}--${User.message}`);
+node.appendChild(text);
+
+let box= document.querySelector('#container');
+
+let br= document.createElement('br');
+
+node.style.float='right';
+node.style.border='2px solid crimson';
+node.style.padding='5px';
+let br2= document.createElement('br');
+box.appendChild(br);
+box.appendChild(br2);
+box.appendChild(node);
+
+});
+
+
+</script>
+
+
+
+</body>
+    </html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login in to the Programmer's Chat Room</title>
+        <link href="index.css" rel='stylesheet' type="text/css">
+    </head>
+<body>
+
+    <h1>Please enter your credentials to proceed to The Programmer's Chat Room</h1>
+
+    <section id="container">
+        
+        <form action="Chat.html" method="GET">
+            <label for="username" id="label">Enter your username</label>
+            <input type="text" id="username" placeholder="username" name='username'>
+            <label for="dropdown" id="roomLabel">Choose Room </label>
+            <select   name="dropdown" required id="dropdown">
+                <option>App Developers</option>
+                <option>Web Developers</option>
+                <option>Game Development</option>
+                <option>AI and Machine Learning</option>
+                <option>Robotics</option>
+            </select>
+            <input type="submit" value="Goto Room" id="button">
+            
+
+        </form>
+    </section>
+
+
+
+
+</body>
+
+</html>
