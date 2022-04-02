@@ -1,0 +1,65 @@
+#mainhead{
+text-align: center;
+color: crimson;
+
+}
+
+#container{
+display: flex;
+position: relative;
+top:200px;
+left:500px;
+border:10px solid black;
+width:400px;
+height: 400px;
+
+}
+#circle{
+width: 300px;
+height: 300px;
+border-radius: 50%;
+background-color: black;
+position: relative;
+top:50px;
+left:50px;
+}
+.numbers{
+    
+    color:white;
+    position: relative;
+    top:100px;
+    left:100px;
+   
+}
+#hours{
+    display: inline;
+}
+#minutes{
+    display: inline;
+}
+#seconds{
+    display: inline;
+}
+#milliseconds{
+    display: inline;
+}
+
+#start{
+    color: crimson;
+    position: relative;
+    top:250px;  
+     
+}
+#stop{
+    color:cyan;
+    position: relative;
+    left:200px;
+    top:250px;
+}
+#reset{
+    visibility: hidden;
+    color: crimson;
+    position: relative;
+    left:20px;
+    top:250px;
+}

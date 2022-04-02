@@ -1,0 +1,16 @@
+{
+  "name": "reactstopwatch",
+  "version": "1.0.0",
+  "description": "A stopwatch made in React.js",
+  "main": "stopWatch.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Krish Patel",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "react": "^16.13.1"
+  }
+}
